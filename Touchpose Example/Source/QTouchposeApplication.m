@@ -85,6 +85,9 @@ touchEndAnimationDuration:(NSTimeInterval)touchEndAnimationDuration
             
             UIImageView *iv = [[UIImageView alloc] initWithImage:customTouchImage];
             [self addSubview:iv];
+            
+            _touchEndAnimationDuration = touchEndAnimationDuration;
+            _touchEndTransform = touchEndTransform;
         }
         
         return self;
