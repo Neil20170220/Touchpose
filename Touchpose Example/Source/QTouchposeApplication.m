@@ -57,9 +57,10 @@ touchEndAnimationDuration:(NSTimeInterval)touchEndAnimationDuration
 #pragma mark - UIView
 
 - (void)removeFromSuperview {
+    CATransform3D transform = _touchEndTransform;
     [UIView animateWithDuration:_touchEndAnimationDuration animations:^{
         self.alpha = 0.0f;
-        self.layer.transform = _touchEndTransform;
+        self.layer.transform = transform;
     } completion:^(BOOL completed) {
         [super removeFromSuperview];
     }];
