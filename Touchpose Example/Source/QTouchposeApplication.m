@@ -54,18 +54,6 @@ touchEndAnimationDuration:(NSTimeInterval)touchEndAnimationDuration
     CGFloat _touchEndAnimationDuration;
 }
 
-#pragma mark - UIView
-
-- (void)removeFromSuperview {
-    CATransform3D transform = _touchEndTransform;
-    [UIView animateWithDuration:_touchEndAnimationDuration animations:^{
-        self.alpha = 0.0f;
-        self.layer.transform = transform;
-    } completion:^(BOOL completed) {
-        [super removeFromSuperview];
-    }];
-}
-
 #pragma mark - QTouchposeFingerView
 
 - (id)initWithPoint:(CGPoint)point
@@ -278,7 +266,13 @@ static void UIWindow_new_didAddSubview(UIWindow *window, SEL _cmd, UIView *view)
             if (fingerView != NULL) {
                 // Remove the touch from the
                 [_touchDictionary removeObjectForKey:key];
-                [fingerView removeFromSuperview];
+                CATransform3D transform = _touchEndTransform;
+                [UIView animateWithDuration:_touchEndAnimationDuration animations:^{
+                    fingerView.alpha = 0.0f;
+                    fingerView.layer.transform = transform;
+                } completion:^(BOOL completed) {
+                    [fingerView removeFromSuperview];
+                }];
             }
         } else {
             if (fingerView == NULL) {
